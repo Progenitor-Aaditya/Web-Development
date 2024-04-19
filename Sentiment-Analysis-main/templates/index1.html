@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Web App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sentiment Analysis Web App</h1>
+        
+        <form action="/analyze" method="post" enctype="multipart/form-data">
+            <label for="file">Upload CSV File:</label>
+            <input type="file" name="file" accept=".csv">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+
+        {% if avg_positive %}
+            <p>Average Positive Sentiment: {{ avg_positive }}%</p>
+            {% if graph_exists %}
+                <img class="graph-img" src="data:image/png;base64, {{ graph_data }}" alt="Sentiment Distribution">
+            {% endif %}
+        {% endif %}
+
+        {% if avg_negative %}
+            <p>Average Negative Sentiment: {{ avg_negative }}%</p>
+        {% endif %}
+
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
